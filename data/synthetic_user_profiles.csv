@@ -1,0 +1,11 @@
+user_id,profile_name,preferred_regions,preferred_ethnic_groups,preferred_categories,preferred_festivals,preferred_traditions,preferred_products,profile_type
+U001,West_African_Cultural_Interest,West Africa,,,,,"cultural products, foods, clothing",regional
+U002,East_Asian_Cultural_Interest,East Asia,,,,,"foods, clothing, cultural goods",regional
+U003,Latin_American_Cultural_Interest,Latin America,,,,,"foods, clothing, cultural goods",regional
+U004,South_Asian_Cultural_Interest,South Asia,,,,,"foods, clothing, cultural goods",regional
+U005,Traditional_Craft_Interest,,,traditional crafts,,"traditional, handcrafted, artisan",handcrafted cultural products,tradition
+U006,Festival_Product_Interest,,,,festival-related products,,festival and celebration products,festival
+U007,Cultural_Food_Interest,,,traditional foods,,traditional food,culturally specific foods and ingredients,food
+U008,Cultural_Clothing_Interest,,,traditional clothing,,"traditional clothing, textile traditions",culturally associated clothing,clothing
+U009,Broad_Multicultural_Interest,"Africa, Asia, Europe, Latin America",,,,,cultural products across regions,multicultural
+U010,General_Marketplace_User,,,,,,general marketplace products,general
