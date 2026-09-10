@@ -1,0 +1,61 @@
+user_id,profile_dimension,ontology_dimension,preference_count,preference_present,profile_weight,preference_values
+U001,preferred_regions,cultural_region,1,True,0.25,West Africa
+U001,preferred_ethnic_groups,ethnic_group,0,False,0.15,
+U001,preferred_categories,cultural_category,0,False,0.25,
+U001,preferred_festivals,festival_relevance,0,False,0.15,
+U001,preferred_traditions,traditional_significance,0,False,0.15,
+U001,preferred_products,product_content,3,True,0.05,cultural products | foods | clothing
+U002,preferred_regions,cultural_region,1,True,0.25,East Asia
+U002,preferred_ethnic_groups,ethnic_group,0,False,0.15,
+U002,preferred_categories,cultural_category,0,False,0.25,
+U002,preferred_festivals,festival_relevance,0,False,0.15,
+U002,preferred_traditions,traditional_significance,0,False,0.15,
+U002,preferred_products,product_content,3,True,0.05,foods | clothing | cultural goods
+U003,preferred_regions,cultural_region,1,True,0.25,Latin America
+U003,preferred_ethnic_groups,ethnic_group,0,False,0.15,
+U003,preferred_categories,cultural_category,0,False,0.25,
+U003,preferred_festivals,festival_relevance,0,False,0.15,
+U003,preferred_traditions,traditional_significance,0,False,0.15,
+U003,preferred_products,product_content,3,True,0.05,foods | clothing | cultural goods
+U004,preferred_regions,cultural_region,1,True,0.25,South Asia
+U004,preferred_ethnic_groups,ethnic_group,0,False,0.15,
+U004,preferred_categories,cultural_category,0,False,0.25,
+U004,preferred_festivals,festival_relevance,0,False,0.15,
+U004,preferred_traditions,traditional_significance,0,False,0.15,
+U004,preferred_products,product_content,3,True,0.05,foods | clothing | cultural goods
+U005,preferred_regions,cultural_region,0,False,0.25,
+U005,preferred_ethnic_groups,ethnic_group,0,False,0.15,
+U005,preferred_categories,cultural_category,1,True,0.25,traditional crafts
+U005,preferred_festivals,festival_relevance,0,False,0.15,
+U005,preferred_traditions,traditional_significance,3,True,0.15,traditional | handcrafted | artisan
+U005,preferred_products,product_content,1,True,0.05,handcrafted cultural products
+U006,preferred_regions,cultural_region,0,False,0.25,
+U006,preferred_ethnic_groups,ethnic_group,0,False,0.15,
+U006,preferred_categories,cultural_category,0,False,0.25,
+U006,preferred_festivals,festival_relevance,1,True,0.15,festival-related products
+U006,preferred_traditions,traditional_significance,0,False,0.15,
+U006,preferred_products,product_content,1,True,0.05,festival and celebration products
+U007,preferred_regions,cultural_region,0,False,0.25,
+U007,preferred_ethnic_groups,ethnic_group,0,False,0.15,
+U007,preferred_categories,cultural_category,1,True,0.25,traditional foods
+U007,preferred_festivals,festival_relevance,0,False,0.15,
+U007,preferred_traditions,traditional_significance,1,True,0.15,traditional food
+U007,preferred_products,product_content,1,True,0.05,culturally specific foods and ingredients
+U008,preferred_regions,cultural_region,0,False,0.25,
+U008,preferred_ethnic_groups,ethnic_group,0,False,0.15,
+U008,preferred_categories,cultural_category,1,True,0.25,traditional clothing
+U008,preferred_festivals,festival_relevance,0,False,0.15,
+U008,preferred_traditions,traditional_significance,2,True,0.15,traditional clothing | textile traditions
+U008,preferred_products,product_content,1,True,0.05,culturally associated clothing
+U009,preferred_regions,cultural_region,4,True,0.25,Africa | Asia | Europe | Latin America
+U009,preferred_ethnic_groups,ethnic_group,0,False,0.15,
+U009,preferred_categories,cultural_category,0,False,0.25,
+U009,preferred_festivals,festival_relevance,0,False,0.15,
+U009,preferred_traditions,traditional_significance,0,False,0.15,
+U009,preferred_products,product_content,1,True,0.05,cultural products across regions
+U010,preferred_regions,cultural_region,0,False,0.25,
+U010,preferred_ethnic_groups,ethnic_group,0,False,0.15,
+U010,preferred_categories,cultural_category,0,False,0.25,
+U010,preferred_festivals,festival_relevance,0,False,0.15,
+U010,preferred_traditions,traditional_significance,0,False,0.15,
+U010,preferred_products,product_content,1,True,0.05,general marketplace products
