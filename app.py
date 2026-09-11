@@ -1548,8 +1548,6 @@ if (
                     f"{row.get('festival_relevance', 'Not available')}"
                 )
 
-                st.write(
-                    f"**Traditional Significance:** "
                     f"{row.get('traditional_significance', 'Not available')}"
                 )
 
