@@ -1274,7 +1274,6 @@ for label, dimension in [
     ("Ethnic Group", "preferred_ethnic_groups"),
     ("Cultural Category", "preferred_categories"),
     ("Festival", "preferred_festivals"),
-    ("Traditional Significance", "preferred_traditions"),
     ("Product Interest", "preferred_products"),
 ]:
 
