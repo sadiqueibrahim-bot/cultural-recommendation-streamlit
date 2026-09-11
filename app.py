@@ -213,6 +213,81 @@ cultural_max = ENGINE["cultural_max"]
 # PREFERENCE PARSING
 # =============================================================================
 
+
+def extract_ui_options(value):
+    """
+    Participant-facing option extractor.
+
+    This function is intentionally separate from parse_preferences().
+    It prevents long LLM-generated evidence/explanation text from being
+    exposed as selectable participant preferences.
+
+    The underlying research ontology and recommendation calculations
+    remain unchanged.
+    """
+
+    if value is None:
+        return set()
+
+    if pd.isna(value):
+        return set()
+
+    text = str(value).strip()
+
+    if not text:
+        return set()
+
+    text = text.strip("[](){}")
+
+    parts = re.split(
+        r"\s*[;,|]\s*",
+        text
+    )
+
+    output = set()
+
+    for part in parts:
+        cleaned = (
+            part
+            .strip()
+            .strip("'\"")
+            .strip()
+            .lower()
+        )
+
+        if not cleaned:
+            continue
+
+        # Exclude long explanatory/evidence statements from
+        # participant-facing selectors.
+        if len(cleaned) > 80:
+            continue
+
+        # Exclude obvious explanatory statements.
+        explanatory_terms = [
+            "does not establish",
+            "insufficient evidence",
+            "not sufficient evidence",
+            "not establish",
+            "cultural association only",
+            "product descriptor",
+            "marketing language",
+            "refers to",
+            "indicates an",
+            "appears to",
+            "is treated as",
+            "describes",
+            "rather than",
+        ]
+
+        if any(term in cleaned for term in explanatory_terms):
+            continue
+
+        output.add(cleaned)
+
+    return output
+
+
 def parse_preferences(value):
 
     if value is None:
@@ -1018,98 +1093,130 @@ st.header(
     "1. Tell us what you are interested in"
 )
 
-regions = sorted(
-    {
-        value
-        for values in ONTOLOGY_ARRAYS[
-            "cultural_region"
-        ]
-        for value in values
-        if value
-    }
-)
 
-ethnic_groups = sorted(
-    {
-        value
-        for values in ONTOLOGY_ARRAYS[
-            "ethnic_group"
-        ]
-        for value in values
-        if value
-    }
-)
+# =============================================================================
+# PARTICIPANT-FACING CULTURAL PREFERENCE VOCABULARY
+# =============================================================================
+#
+# This is a controlled research-interface vocabulary.
+#
+# It does NOT modify the underlying 50K ontology or recommendation dataset.
+# The values below correspond to exact ontology values already present in
+# the recommendation dataset.
+#
+# Traditional Significance remains part of the underlying model but is not
+# exposed as a participant selector because the current field contains noisy
+# explanatory LLM-generated text and previously caused the interface to freeze.
+# =============================================================================
 
-categories = sorted(
-    {
-        value
-        for values in ONTOLOGY_ARRAYS[
-            "cultural_category"
-        ]
-        for value in values
-        if value
-    }
-)
+REGION_OPTIONS = [
+    ("Africa", "africa"),
+    ("West Africa", "west africa"),
+    ("East Africa", "east africa"),
+    ("North Africa", "north africa"),
+    ("Southern Africa", "southern africa"),
+    ("East Asia", "east asia"),
+    ("Southeast Asia", "southeast asia"),
+    ("South Asia", "south asia"),
+    ("Middle East", "middle east"),
+    ("Europe", "europe"),
+    ("Western Europe", "western europe"),
+    ("Latin America", "latin america"),
+    ("North America", "north america"),
+    ("South America", "south america"),
+    ("Caribbean", "caribbean"),
+    ("Central America", "central america"),
+]
 
-festivals = sorted(
-    {
-        value
-        for values in ONTOLOGY_ARRAYS[
-            "festival_relevance"
-        ]
-        for value in values
-        if value
-    }
-)
+ETHNIC_GROUP_OPTIONS = [
+    ("Akan", "akan"),
+    ("Yoruba", "yoruba"),
+    ("Japanese", "japanese"),
+    ("Korean", "korean"),
+    ("Chinese", "chinese"),
+    ("Indian", "indian"),
+    ("Punjabi", "punjabi"),
+    ("Tamil", "tamil"),
+    ("Bengali", "bengali"),
+    ("Thai", "thai"),
+    ("Vietnamese", "vietnamese"),
+    ("Filipino", "filipino"),
+    ("Mexican", "mexican"),
+    ("Jamaican", "jamaican"),
+    ("Haitian", "haitian"),
+    ("Turkish", "turkish"),
+    ("Lebanese", "lebanese"),
+    ("Persian", "persian"),
+    ("Jewish", "jewish"),
+    ("Irish", "irish"),
+    ("Scottish", "scottish"),
+    ("Greek", "greek"),
+    ("Italian", "italian"),
+    ("Navajo", "navajo"),
+    ("Maya", "maya"),
+]
 
-traditions = sorted(
-    {
-        value
-        for values in ONTOLOGY_ARRAYS[
-            "traditional_significance"
-        ]
-        for value in values
-        if value
-    }
-)
+CATEGORY_OPTIONS = [
+    ("Traditional Food", "traditional food"),
+    ("Traditional Clothing", "traditional clothing"),
+    ("Jewelry", "jewelry"),
+    ("Tea", "tea"),
+    ("Coffee", "coffee"),
+    ("Traditional Footwear", "traditional footwear"),
+]
 
+FESTIVAL_OPTIONS = [
+    ("Christmas", "christmas"),
+    ("Halloween", "halloween"),
+    ("Easter", "easter"),
+    ("Valentine's Day", "valentine's day"),
+]
+
+# Maps participant-facing labels back to the exact ontology values.
+REGION_LABEL_TO_VALUE = dict(REGION_OPTIONS)
+ETHNIC_LABEL_TO_VALUE = dict(ETHNIC_GROUP_OPTIONS)
+CATEGORY_LABEL_TO_VALUE = dict(CATEGORY_OPTIONS)
+FESTIVAL_LABEL_TO_VALUE = dict(FESTIVAL_OPTIONS)
+
+
+# =============================================================================
+# PARTICIPANT INPUT
+# =============================================================================
 
 col1, col2 = st.columns(2)
 
 with col1:
 
-    selected_regions = st.multiselect(
+    selected_region_labels = st.multiselect(
         "Cultural Region",
-        regions,
+        [label for label, value in REGION_OPTIONS],
         key="regions",
     )
 
-    selected_ethnic_groups = st.multiselect(
+    selected_ethnic_labels = st.multiselect(
         "Ethnic Group",
-        ethnic_groups,
+        [label for label, value in ETHNIC_GROUP_OPTIONS],
         key="ethnic_groups",
     )
 
-    selected_categories = st.multiselect(
+    selected_category_labels = st.multiselect(
         "Cultural Category",
-        categories,
+        [label for label, value in CATEGORY_OPTIONS],
         key="categories",
     )
 
 
 with col2:
 
-    selected_festivals = st.multiselect(
+    selected_festival_labels = st.multiselect(
         "Festival Relevance",
-        festivals,
+        [label for label, value in FESTIVAL_OPTIONS],
         key="festivals",
     )
 
-    selected_traditions = st.multiselect(
-        "Traditional Significance",
-        traditions,
-        key="traditions",
-    )
+    # Traditional Significance remains an underlying model dimension,
+    # but is intentionally not exposed as a participant-facing selector.
+    selected_traditions = []
 
     product_interest = st.text_input(
         "Product Interest",
@@ -1119,6 +1226,28 @@ with col2:
         ),
         key="product_interest",
     )
+
+
+# Convert participant-facing labels to exact ontology values.
+selected_regions = [
+    REGION_LABEL_TO_VALUE[label]
+    for label in selected_region_labels
+]
+
+selected_ethnic_groups = [
+    ETHNIC_LABEL_TO_VALUE[label]
+    for label in selected_ethnic_labels
+]
+
+selected_categories = [
+    CATEGORY_LABEL_TO_VALUE[label]
+    for label in selected_category_labels
+]
+
+selected_festivals = [
+    FESTIVAL_LABEL_TO_VALUE[label]
+    for label in selected_festival_labels
+]
 
 
 # =============================================================================
